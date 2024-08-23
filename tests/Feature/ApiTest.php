@@ -66,9 +66,9 @@ class ApiTest extends TestCase
         ];
     }
 
-    private function getDefaultResponse()
+    private function getDefaultResponse(): \Illuminate\Testing\TestResponse
     {
-        return $this->withHeaders(['Authorization' => 'Something'])
+        return $this->withHeaders(['Authorization' => env('API_KEY')])
             ->getJson('/api/quotes');
     }
 }

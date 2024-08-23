@@ -15,6 +15,10 @@ class ValidateApiToken
      */
     public function handle(Request $request, Closure $next): Response
     {
+        if ($request->header('Authorization') != env('API_KEY')) {
+            return response()->json('Unauthorized', 401);
+        }
+
         return $next($request);
     }
 }
