@@ -11,8 +11,13 @@ class DataSourceManager extends Manager
         return 'kanye-api';
     }
 
-    public function createKanyeApiDriver()
+    public function createKanyeApiDriver(): KanyeApiDataSource
     {
         return new KanyeApiDataSource();
+    }
+
+    public function createLoremIpsumDriver(): LoremIpsumDataSource
+    {
+        return new LoremIpsumDataSource();
     }
 }

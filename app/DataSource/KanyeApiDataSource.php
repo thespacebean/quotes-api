@@ -14,7 +14,7 @@ class KanyeApiDataSource implements DataSourceInterface
 
             $response = Http::get('https://api.kanye.rest/quotes');
 
-            return collect($response->json());
+            return collect($response->json())->shuffle();
         });
     }
 

@@ -54,11 +54,11 @@ class LoremIpsumDataSource implements DataSourceInterface
             "Cras vestibulum nunc id eros faucibus lacinia.",
             "Aenean auctor nunc et metus consequat porttitor.",
             "Morbi vulputate lacus quis leo vulputate congue.",
-        ]);
+        ])->shuffle();
     }
 
-    public function getRandom()
+    public function getRandom(?int $count = 5)
     {
-        // TODO: Implement getRandom() method.
+        return $this->getAll()->random($count);
     }
 }

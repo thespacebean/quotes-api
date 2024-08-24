@@ -1,11 +1,11 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests;
 
+use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Support\Facades\Http;
-use Tests\TestCase;
 
-class ApiTest extends TestCase
+abstract class ApiTestCase extends BaseTestCase
 {
     protected function setUp(): void
     {
@@ -17,33 +17,11 @@ class ApiTest extends TestCase
             'https://api.kanye.rest/*' => Http::response($this->getExampleQuotes()),
         ]);
     }
-    public function test_the_api_returns_a_successful_response(): void
+
+    public function getDefaultResponse(?string $uri = '/api/quotes'): \Illuminate\Testing\TestResponse
     {
-        $response = $this->getDefaultResponse();
-
-        $response->assertStatus(200);
-    }
-
-    public function test_the_api_returns_five_quotes(): void
-    {
-        $response = $this->getDefaultResponse();
-
-        $this->assertCount(5, $response['quotes']);
-    }
-
-    public function test_the_api_returns_non_identical_quotes(): void
-    {
-        $response = $this->getDefaultResponse();
-        $secondResponse = $this->getDefaultResponse();
-
-        $this->assertNotEquals($response['quotes'], $secondResponse['quotes']);
-    }
-
-    public function test_the_api_returns_error_without_token(): void
-    {
-        $response = $this->get('/api/quotes');
-
-        $response->assertStatus(401);
+        return $this->withHeaders(['Authorization' => 'Bearer '.env('API_TOKEN')])
+            ->getJson($uri);
     }
 
     private function getExampleQuotes(): array
@@ -66,9 +44,4 @@ class ApiTest extends TestCase
         ];
     }
 
-    private function getDefaultResponse(): \Illuminate\Testing\TestResponse
-    {
-        return $this->withHeaders(['Authorization' => env('API_KEY')])
-            ->getJson('/api/quotes');
-    }
 }
