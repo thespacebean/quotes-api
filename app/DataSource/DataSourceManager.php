@@ -8,7 +8,7 @@ class DataSourceManager extends Manager
 {
     public function getDefaultDriver()
     {
-        return 'kanye-api';
+        return config('datasource.default');
     }
 
     public function createKanyeApiDriver(): KanyeApiDataSource

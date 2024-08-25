@@ -4,14 +4,12 @@ namespace App\Http\Controllers\Api;
 
 use App\DataSource\DataSource;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-
 
 class QuoteController extends Controller
 {
-    public function index(Request $request): \Illuminate\Http\JsonResponse
+    public function index(): \Illuminate\Http\JsonResponse
     {
-        $data = DataSource::driver(config('datasource.default'));
+        $data = DataSource::class;
         $quotes = $data->paginate();
 
         return response()->json(array_merge([

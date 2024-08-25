@@ -2,7 +2,6 @@
 
 namespace App\DataSource;
 
-use App\Traits\PaginatesTrait;
 use Illuminate\Support\Collection;
 
 interface DataSourceInterface
