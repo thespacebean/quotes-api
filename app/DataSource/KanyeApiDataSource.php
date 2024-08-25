@@ -13,8 +13,9 @@ class KanyeApiDataSource implements DataSourceInterface
     use PaginatesTrait;
     public function getAll(): Collection
     {
-
         return Cache::remember('quotes', strtotime('tomorrow 02:00'), function() {
+
+            ray('this is being called');
 
             $response = Http::get('https://api.kanye.rest/quotes');
 

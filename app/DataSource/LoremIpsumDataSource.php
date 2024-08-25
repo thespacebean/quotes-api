@@ -8,6 +8,7 @@ use Illuminate\Support\Collection;
 class LoremIpsumDataSource implements DataSourceInterface
 {
     use PaginatesTrait;
+
     public function getAll(): Collection
     {
         return collect([

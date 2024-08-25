@@ -6,7 +6,7 @@ use Illuminate\Support\Manager;
 
 class DataSourceManager extends Manager
 {
-    public function getDefaultDriver()
+    public function getDefaultDriver(): string
     {
         return config('datasource.default');
     }

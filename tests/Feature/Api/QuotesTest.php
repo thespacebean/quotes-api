@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Api;
 
+use Illuminate\Support\Facades\Cache;
 use Tests\ApiTestCase;
 
 class QuotesTest extends ApiTestCase
@@ -25,6 +26,18 @@ class QuotesTest extends ApiTestCase
         $response = $this->get('/api/quotes');
 
         $response->assertStatus(401);
+    }
+
+    public function test_the_json_structure_is_correct(): void
+    {
+        $response = $this->getDefaultResponse();
+
+        $response->assertExactJsonStructure([
+            'quotes',
+            'page',
+            'count',
+            'total_pages',
+        ]);
     }
 
 }
