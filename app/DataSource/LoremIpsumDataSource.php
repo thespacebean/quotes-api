@@ -2,9 +2,13 @@
 
 namespace App\DataSource;
 
+use App\Traits\PaginatesTrait;
+use Illuminate\Support\Collection;
+
 class LoremIpsumDataSource implements DataSourceInterface
 {
-    public function getAll()
+    use PaginatesTrait;
+    public function getAll(): Collection
     {
         return collect([
             "Morbi non vestibulum nisl. Mauris lectus velit, bibendum ac mi.",
@@ -57,8 +61,18 @@ class LoremIpsumDataSource implements DataSourceInterface
         ])->shuffle();
     }
 
-    public function getRandom(?int $count = 5)
+    public function getRandom(?int $count = 5): Collection
     {
         return $this->getAll()->random($count);
+    }
+
+    public function paginate(): Collection
+    {
+        return $this->paginateCollection($this->getAll());
+    }
+
+    public function getPaginationInfo(): array
+    {
+        return $this->buildAdditionalInfoArray($this->getAll());
     }
 }

@@ -11,29 +11,20 @@ class QuoteController extends Controller
 {
     public function index(Request $request): \Illuminate\Http\JsonResponse
     {
-        $chunk = config('datasource.chunk_size');
-        $quotes = DataSource::driver(config('datasource.default'))->getAll();
-        $page = $request->query('page') ?? 1;
-        $count = $quotes->count();
-        $quotes = $quotes->skip($chunk * ($page - 1))
-            ->take($chunk)
-            ->values();
+        $data = DataSource::driver(config('datasource.default'));
+        $quotes = $data->paginate();
 
-        return response()->json([
+        return response()->json(array_merge([
             'quotes' => $quotes,
-            'count' => $count,
-            'page' => $request->query('page') ?? 1,
-            'total_pages' => ceil($count / $chunk),
-        ]);
+        ], $data->getPaginationInfo()));
     }
 
     public function random(): \Illuminate\Http\JsonResponse
     {
-        $quotes = DataSource::driver(config('datasource.default'))
-            ->getRandom(config('datasource.chunk_size'));
+        $data = DataSource::driver(config('datasource.default'));
 
         return response()->json([
-            'quotes' => $quotes
+            'quotes' => $data->getRandom(config('datasource.chunk_size'))
         ]);
     }
 }
