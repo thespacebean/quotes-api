@@ -13,11 +13,11 @@ class QuotesRandomTest extends ApiTestCase
         $response->assertStatus(200);
     }
 
-    public function test_the_endpoint_returns_five_quotes(): void
+    public function test_the_endpoint_returns_correct_number_of_quotes(): void
     {
         $response = $this->getDefaultResponse('/api/quotes/random');
 
-        $this->assertCount(5, $response['quotes']);
+        $this->assertCount(config('datasource.chunk_size'), $response['quotes']);
     }
 
     public function test_the_random_quotes_endpoint_returns_non_identical_quotes(): void

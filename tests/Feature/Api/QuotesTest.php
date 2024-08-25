@@ -2,7 +2,9 @@
 
 namespace Tests\Feature\Api;
 
+use App\DataSource\DataSource;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Http;
 use Tests\ApiTestCase;
 
 class QuotesTest extends ApiTestCase
@@ -14,11 +16,11 @@ class QuotesTest extends ApiTestCase
         $response->assertStatus(200);
     }
 
-    public function test_the_endpoint_returns_five_quotes(): void
+    public function test_the_endpoint_returns_correct_number_of_quotes(): void
     {
         $response = $this->getDefaultResponse();
 
-        $this->assertCount(5, $response['quotes']);
+        $this->assertCount(config('datasource.chunk_size'), $response['quotes']);
     }
 
     public function test_the_endpoint_returns_error_without_token(): void
@@ -38,6 +40,26 @@ class QuotesTest extends ApiTestCase
             'count',
             'total_pages',
         ]);
+    }
+
+    public function test_the_endpoint_returns_consistent_pages(): void
+    {
+        $response = $this->getDefaultResponse('/api/quotes?page=3');
+        $secondResponse = $this->getDefaultResponse('/api/quotes?page=3');
+
+        $this->assertEquals($response['quotes'], $secondResponse['quotes']);
+    }
+
+    public function test_the_endpoint_can_use_different_sources(): void
+    {
+        $responseKanye = $this->getDefaultResponse();
+
+        config(['datasource.default' => 'lorem-ipsum']);
+
+        $responseLoremIpsum = $this->getDefaultResponse();
+
+        $this->assertNotEquals($responseKanye['quotes'], $responseLoremIpsum['quotes']);
+
     }
 
 }

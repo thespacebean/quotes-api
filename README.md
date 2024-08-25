@@ -9,6 +9,7 @@ This is a random quote API which by default returns quotes in sets of 5 and uses
 - PHP 8.2
 - Composer 2+
 - Postman or other API client (if you want to access the API directly)
+- Xdebug and/or PCOV extensions for PHP (if you want to generate code coverage report)
 
 ## Local Setup
 
@@ -23,6 +24,8 @@ If you now direct yourself to [http://127.0.0.1:8000](http://127.0.0.1:8000) you
 ## Running Tests
 
 To run the suite of tests please run the following command: `php artisan test`
+
+If you have the xdebug or PCOV extension enabled for php and would like to generate/view a code coverage report then please run the following: `php artisan test --coverage`. This should display coverage information on the command line, as well as txt and html results in a 
 
 ## Accessing the API
 
