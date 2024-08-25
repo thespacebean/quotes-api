@@ -16,7 +16,7 @@ This application uses no database and can be served locally through artisan, so 
 
 - `cp .env.example .env`
 - `composer install`
-- `php artisan up`
+- `php artisan serve`
 
 If you now direct yourself to [http://127.0.0.1:8000](http://127.0.0.1:8000) you should see this readme!
 
@@ -41,6 +41,8 @@ The following endpoints are accessible with a GET request:
 ## Customising the API
 
 You can change the API token required to access the quotes by updating the `API_KEY` in your .env file. If you want to view a different number of quotes per "page" of the API you can update `DATASOURCE_CHUNK_SIZE` and if you rather see latin nonsense than Kanye nonsense you can update `DATASOURCE_DEFAULT` to `lorem-ipsum`. 
+
+If you update your API_KEY remember to update your Postman or other API connections.
 
 Have fun!
 
