@@ -15,8 +15,6 @@ class KanyeApiDataSource implements DataSourceInterface
     {
         return Cache::remember('quotes', strtotime('tomorrow 02:00'), function() {
 
-            ray('this is being called');
-
             $response = Http::get('https://api.kanye.rest/quotes');
 
             return collect($response->json())->shuffle();
