@@ -23,7 +23,8 @@ class DataSourceTest extends TestCase
     {
         Cache::shouldReceive('remember')
             ->with('quotes', strtotime('tomorrow 02:00'), \Closure::class)
-            ->once();
+            ->once()
+            ->andReturn(collect([]));
 
         DataSource::driver('kanye-api')->getAll();
     }

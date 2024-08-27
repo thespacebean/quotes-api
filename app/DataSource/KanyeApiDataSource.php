@@ -13,14 +13,13 @@ class KanyeApiDataSource implements DataSourceInterface
     use PaginatesTrait;
     public function getAll(): Collection
     {
-        $quotes = Cache::remember('quotes', strtotime('tomorrow 02:00'), function() {
+        return Cache::remember('quotes', strtotime('tomorrow 02:00'), function() {
 
             $response = Http::get('https://api.kanye.rest/quotes');
 
             return collect($response->json())->shuffle();
         });
 
-        return $quotes ?? collect();
     }
 
     public function getRandom(?int $count = 5): Collection
