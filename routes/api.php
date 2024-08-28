@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\Api\QuoteController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/quotes', [\App\Http\Controllers\Api\QuoteController::class, 'index']);
 
-Route::get('/quotes/random', [\App\Http\Controllers\Api\QuoteController::class, 'random']);
+Route::controller(QuoteController::class)->prefix('quotes')->group(function () {
+    Route::get('/', 'index');
+    Route::get('/random', 'random');
+});
